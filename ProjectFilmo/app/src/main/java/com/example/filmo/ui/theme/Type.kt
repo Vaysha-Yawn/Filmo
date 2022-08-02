@@ -30,7 +30,7 @@ val Typography = Typography(
         fontWeight = FontWeight.Medium,
     ),
 
-    // для навания фильма в его описании
+    // для основного текста
     body1 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,

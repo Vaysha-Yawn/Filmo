@@ -1,6 +1,5 @@
 package com.example.filmo.testData
 
-import com.example.filmo.exampleData
 import com.example.filmo.remote.dataClass.Actor
 import com.example.filmo.remote.dataClass.FilmMore
 import com.example.filmo.remote.dataClass.FilmShort
@@ -55,10 +54,11 @@ class TestData {
 
     val list = mutableListOf<FilmShort>()
     val map = mutableMapOf<String, MutableList<FilmShort>>()
+    val title = "Топ 250 фильмов"
 
     init{
         for (i in 1..20){
-            list.add(exampleData.filmShort)
+            list.add(filmShort)
         }
 
         for (i in 1..10){

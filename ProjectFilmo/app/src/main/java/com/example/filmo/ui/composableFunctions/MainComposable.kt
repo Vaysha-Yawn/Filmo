@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +15,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.filmo.remote.dataClass.FilmShort
 
@@ -27,7 +26,7 @@ import com.example.filmo.remote.dataClass.FilmShort
 fun CardFilmSmall(film: FilmShort) {
     Card(
         modifier = Modifier
-            .padding(end = 20.dp)
+            .padding(end = 20.dp, top = 20.dp)
             .size(100.dp, 145.dp)
             .clip(RoundedCornerShape(5.dp))
     ) {
@@ -69,8 +68,8 @@ fun CardFilmSmall(film: FilmShort) {
 // Название подборки, стрелка - ссылка на отображение всей подборки
 // И список фильмов в подборке
 @Composable
-fun Compilation(title: String, listFilms: MutableList<FilmShort>) {
-    Column(modifier = Modifier.padding(top = 40.dp)) {
+fun Compilation(title: String, listFilms: MutableList<FilmShort>, topSpace: Dp = 40.dp) {
+    Column(modifier = Modifier.padding(top = topSpace)) {
         Row(
             Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -83,7 +82,7 @@ fun Compilation(title: String, listFilms: MutableList<FilmShort>) {
                 modifier = Modifier.size(20.dp, 10.dp)
             )
         }
-        LazyRow(modifier = Modifier.padding(top = 20.dp)) {
+        LazyRow() {
             items(listFilms.size) {
                 CardFilmSmall(listFilms[it])
             }
@@ -97,7 +96,13 @@ fun MainAct(map: MutableMap<String, MutableList<FilmShort>>) {
     LazyColumn(Modifier.padding(start = 20.dp, bottom = 20.dp, end = 20.dp)) {
         items(map.size) {
             val pair = map.toList()[it]
-            Compilation(pair.first, pair.second)
+            if (it == 0){
+                Compilation(pair.first, pair.second, 0.dp)
+            }else{
+                Compilation(pair.first, pair.second)
+            }
         }
     }
 }
+
+
