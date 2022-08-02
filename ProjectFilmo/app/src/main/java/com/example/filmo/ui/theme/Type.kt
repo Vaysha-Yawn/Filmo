@@ -37,6 +37,19 @@ val Typography = Typography(
         fontSize = 14.sp
     ),
 
+    // для года и рейтинга фильма в его карточке
+    h2 = TextStyle(
+        color = Color.White,
+        fontSize = 10.sp
+    ),
+
+    // для названия фильма в его карточке
+    h3 = TextStyle(
+        color = Color.White,
+        fontWeight = FontWeight.Black,
+        fontSize = 12.sp
+    ),
+
     // для имени актера
     h4 = TextStyle(
         fontSize = 10.sp

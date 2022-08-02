@@ -1,10 +1,12 @@
 package com.example.filmo.testData
 
+import com.example.filmo.exampleData
 import com.example.filmo.remote.dataClass.Actor
 import com.example.filmo.remote.dataClass.FilmMore
 import com.example.filmo.remote.dataClass.FilmShort
 
 class TestData {
+
     val filmShort = FilmShort(
         id = "tt0111161",
         title = "The Shawshank Redemption",
@@ -50,5 +52,18 @@ class TestData {
             )
         )
     )
+
+    val list = mutableListOf<FilmShort>()
+    val map = mutableMapOf<String, MutableList<FilmShort>>()
+
+    init{
+        for (i in 1..20){
+            list.add(exampleData.filmShort)
+        }
+
+        for (i in 1..10){
+            map["Топ 250 фильмов $i"] = list
+        }
+    }
 
 }
