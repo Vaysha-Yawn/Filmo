@@ -69,7 +69,7 @@ fun Search(state: MutableState<String>) {
             textColor = Color.DarkGray,
             leadingIconColor = Color.Gray,
             trailingIconColor = Color.Gray,
-            backgroundColor = Color(0xFFEBEBEB),
+            backgroundColor = Color.LightGray,
             focusedIndicatorColor = Color.Transparent,
             cursorColor = Color.Gray,
             disabledIndicatorColor = Color.Transparent,

@@ -1,6 +1,7 @@
 package com.example.filmo
 
 import android.os.Bundle
+import android.telecom.Call
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.filmo.testData.TestData
+import com.example.filmo.ui.composableFunctions.Details
 import com.example.filmo.ui.composableFunctions.LotOfFilms
 import com.example.filmo.ui.composableFunctions.MainAct
 import com.example.filmo.ui.composableFunctions.Search
@@ -25,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             FilmoTheme {
-                val textState = remember {
+                /*val textState = remember {
                     mutableStateOf("")
                 }
                 Column {
@@ -35,7 +37,8 @@ class MainActivity : ComponentActivity() {
                     }else{
                         LotOfFilms(stringResource(id = R.string.answers)+" "+textState.value , exampleData.list)
                     }
-                }
+                }*/
+                Details(film = exampleData.filmMore)
             }
         }
     }
@@ -45,7 +48,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     FilmoTheme {
-        LotOfFilms(exampleData.title , exampleData.list)
+        Details(film = exampleData.filmMore)
     }
 }
 
