@@ -1,4 +1,4 @@
-package com.example.filmo
+package com.example.filmo.ui.composableFunctions
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.filmo.R
 import com.example.filmo.remote.dataClass.FilmShort
 
 // Здесь функции для первого экрана с подборками фильмов
@@ -28,7 +29,7 @@ fun CardFilmSmall(film: FilmShort) {
         modifier = Modifier
             .padding(end = 20.dp, top = 20.dp)
             .size(100.dp, 145.dp)
-            .clip(RoundedCornerShape(5.dp))
+            .clip(RoundedCornerShape(0.dp))
     ) {
         Image(
             BitmapPainter(ImageBitmap.imageResource(R.drawable.image)),

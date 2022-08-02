@@ -1,4 +1,4 @@
-package com.example.filmo.ui
+package com.example.filmo.ui.composableFunctions
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
@@ -10,7 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.filmo.CardFilmSmall
+import com.example.filmo.ui.composableFunctions.CardFilmSmall
 import com.example.filmo.remote.dataClass.FilmShort
 
 // Здесь функции для второго экрана с детализацией подборок фильмов или результатами поиска

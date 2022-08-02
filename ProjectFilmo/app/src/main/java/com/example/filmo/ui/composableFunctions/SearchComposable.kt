@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.filmo.R
 
 // Виджет поиска
 @Composable
@@ -57,7 +58,7 @@ fun Search(state: MutableState<String>) {
         },
         placeholder = {
             Text(
-                text = stringResource(R.string.answer), style = TextStyle(
+                text = stringResource(R.string.search), style = TextStyle(
                     fontSize = 20.sp,
                 )
             )
@@ -68,7 +69,7 @@ fun Search(state: MutableState<String>) {
             textColor = Color.DarkGray,
             leadingIconColor = Color.Gray,
             trailingIconColor = Color.Gray,
-            backgroundColor = Color(0xFFF6F6F6),
+            backgroundColor = Color(0xFFEBEBEB),
             focusedIndicatorColor = Color.Transparent,
             cursorColor = Color.Gray,
             disabledIndicatorColor = Color.Transparent,
