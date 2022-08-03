@@ -52,13 +52,13 @@ val Typography = Typography(
 
     // для имени актера
     h4 = TextStyle(
-        fontSize = 10.sp
+        fontSize = 14.sp
     ),
 
     // для роли актера
     h5 = TextStyle(
         color = Color.Gray,
-        fontSize = 8.sp
+        fontSize = 12.sp
     ),
     /* Other default text styles to override
     button = TextStyle(

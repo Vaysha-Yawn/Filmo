@@ -7,7 +7,7 @@ data class FilmMore(
     val rating:String,
     val poster:String,
     val trailer:String,
-    val genres:String,
+    val genres:List<String>,
     val releaseDate:String,
     val description:String,
     val actors:List<Actor>

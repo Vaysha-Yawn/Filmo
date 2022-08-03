@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.filmo.remote.dataClass.Screens
 import com.example.filmo.testData.TestData
 import com.example.filmo.ui.composableFunctions.Details
 import com.example.filmo.ui.composableFunctions.LotOfFilms
@@ -27,9 +28,14 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             FilmoTheme {
-                /*val textState = remember {
+                val textState = remember {
                     mutableStateOf("")
                 }
+
+                val navigationState = remember {
+                    mutableStateOf(Screens.FirstScreen)
+                }
+
                 Column {
                     Search(textState)
                     if (textState.value==""){
@@ -37,7 +43,8 @@ class MainActivity : ComponentActivity() {
                     }else{
                         LotOfFilms(stringResource(id = R.string.answers)+" "+textState.value , exampleData.list)
                     }
-                }*/
+                }
+
                 Details(film = exampleData.filmMore)
             }
         }

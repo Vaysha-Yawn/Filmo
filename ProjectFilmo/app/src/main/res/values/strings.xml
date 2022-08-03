@@ -2,4 +2,8 @@
     <string name="app_name">Filmo</string>
     <string name="search">Search...</string>
     <string name="answers">Результаты поиска по запросу </string>
+    <string name="date">Дата выхода</string>
+    <string name="description">Описание</string>
+    <string name="generes">Жанры</string>
+    <string name="actors">Актеры</string>
 </resources>
