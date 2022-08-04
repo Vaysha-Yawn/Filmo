@@ -1,4 +1,4 @@
-package com.example.filmo.remote.dataClass
+package com.example.filmo.model
 
 import java.io.Serializable
 

@@ -1,8 +1,8 @@
-package com.example.filmo.testData
+package com.example.filmo.model.testData
 
-import com.example.filmo.remote.dataClass.Actor
-import com.example.filmo.remote.dataClass.FilmMore
-import com.example.filmo.remote.dataClass.FilmShort
+import com.example.filmo.model.remote.dataClass.Actor
+import com.example.filmo.model.remote.dataClass.FilmMore
+import com.example.filmo.model.remote.dataClass.FilmShort
 
 class TestData {
 

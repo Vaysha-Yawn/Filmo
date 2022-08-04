@@ -1,8 +1,6 @@
 package com.example.filmo.ui.composableFunctions
 
 
-import android.app.Activity
-import android.content.ContextWrapper
 import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,7 +29,11 @@ import androidx.core.os.bundleOf
 import com.example.filmo.MainActivity
 import com.example.filmo.R
 import com.example.filmo.getActivity
-import com.example.filmo.remote.dataClass.*
+import com.example.filmo.model.ID
+import com.example.filmo.model.PREVSCREEN
+import com.example.filmo.model.PREVSCREENDATA
+import com.example.filmo.model.Screens
+import com.example.filmo.model.remote.dataClass.*
 
 
 // Экран детализации фильма
@@ -90,7 +92,7 @@ fun Header(title: String, year: String,  lastScreen:Screens, lastScreenData:Stri
     }
 }
 
-fun getBundle(lastScreen:Screens, lastScreenData:String):Bundle{
+fun getBundle(lastScreen: Screens, lastScreenData:String):Bundle{
     return when(lastScreen){
         Screens.MainScreen->{
             createBundleForMainScreen(lastScreenData)
