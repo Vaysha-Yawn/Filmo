@@ -1,15 +1,17 @@
 package com.example.filmo.ui.composableFunctions
 
 
+import android.app.Activity
+import android.content.ContextWrapper
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -24,9 +27,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.bundleOf
+import com.example.filmo.MainActivity
 import com.example.filmo.R
-import com.example.filmo.remote.dataClass.Actor
-import com.example.filmo.remote.dataClass.FilmMore
+import com.example.filmo.getActivity
+import com.example.filmo.remote.dataClass.*
 
 
 // Экран детализации фильма
@@ -36,9 +41,13 @@ import com.example.filmo.remote.dataClass.FilmMore
 // которые состоят из названия и деталей
 // детали бывают текстом, кнопка? жанры, лист актеров
 @Composable
-fun Details(film: FilmMore) {
+fun Details(film: FilmMore, bundle: Bundle) {
+    val idFilm = bundle.getString(ID)?:""
+    val lastScreen = bundle.getSerializable(PREVSCREEN) as Screens
+    val lastScreenData = bundle.getString(PREVSCREENDATA)?:""
+
     Column {
-        Header(film.title, film.year)
+        Header(film.title, film.year, lastScreen, lastScreenData)
         LazyColumn {
             items(1) {
                 Poster(R.drawable.image, film.rating)
@@ -51,9 +60,15 @@ fun Details(film: FilmMore) {
     }
 }
 
+fun createBundleForDetailsScreen(idFilm:String, lastScreen:Screens, lastScreenData:String):Bundle{
+    return bundleOf(Pair(ID, idFilm), Pair(PREVSCREEN, lastScreen),Pair(PREVSCREENDATA, lastScreenData),)
+}
+
+
 // шапка с назанием
 @Composable
-fun Header(title: String, year: String) {
+fun Header(title: String, year: String,  lastScreen:Screens, lastScreenData:String) {
+    val mainAct = LocalContext.current.getActivity() as MainActivity
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,12 +79,28 @@ fun Header(title: String, year: String) {
     {
         Image(
             bitmap = ImageBitmap.imageResource(R.drawable.arrow_back), contentDescription = "back",
-            modifier = Modifier.size(40.dp, 25.dp)
+            modifier = Modifier.size(40.dp, 25.dp).clickable {
+                mainAct.drawScreen(lastScreen, getBundle(lastScreen, lastScreenData))
+            }
         )
         Text(
             text = "$title ($year)", style = MaterialTheme.typography.h1,
             modifier = Modifier.padding(start = 40.dp)
         )
+    }
+}
+
+fun getBundle(lastScreen:Screens, lastScreenData:String):Bundle{
+    return when(lastScreen){
+        Screens.MainScreen->{
+            createBundleForMainScreen(lastScreenData)
+        }
+        Screens.SelectionScreen->{
+            createBundleForSelectionScreen(lastScreenData)
+        }
+        else -> {
+            bundleOf()
+        }
     }
 }
 
