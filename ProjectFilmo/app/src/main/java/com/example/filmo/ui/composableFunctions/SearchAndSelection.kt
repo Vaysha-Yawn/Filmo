@@ -5,8 +5,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -27,12 +27,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
-import com.example.filmo.MainActivity
 import com.example.filmo.R
-import com.example.filmo.getActivity
 import com.example.filmo.model.Screens
 import com.example.filmo.model.TITLE
-import com.example.filmo.model.remote.dataClass.FilmShort
+import com.example.filmo.model.dataClass.FilmShort
+import com.example.filmo.ui.MainActivity
+import com.example.filmo.ui.getActivity
 
 // Второй экран - подборка фильмов
 @Composable

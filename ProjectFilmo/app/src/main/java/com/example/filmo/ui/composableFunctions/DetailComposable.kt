@@ -26,14 +26,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
-import com.example.filmo.MainActivity
 import com.example.filmo.R
-import com.example.filmo.getActivity
 import com.example.filmo.model.ID
 import com.example.filmo.model.PREVSCREEN
 import com.example.filmo.model.PREVSCREENDATA
 import com.example.filmo.model.Screens
-import com.example.filmo.model.remote.dataClass.*
+import com.example.filmo.model.dataClass.*
+import com.example.filmo.ui.MainActivity
+import com.example.filmo.ui.getActivity
 
 
 // Экран детализации фильма
@@ -44,9 +44,9 @@ import com.example.filmo.model.remote.dataClass.*
 // детали бывают текстом, кнопка? жанры, лист актеров
 @Composable
 fun Details(film: FilmMore, bundle: Bundle) {
-    val idFilm = bundle.getString(ID)?:""
+    val idFilm = bundle.getString(ID) ?: ""
     val lastScreen = bundle.getSerializable(PREVSCREEN) as Screens
-    val lastScreenData = bundle.getString(PREVSCREENDATA)?:""
+    val lastScreenData = bundle.getString(PREVSCREENDATA) ?: ""
 
     Column {
         Header(film.title, film.year, lastScreen, lastScreenData)
@@ -62,14 +62,22 @@ fun Details(film: FilmMore, bundle: Bundle) {
     }
 }
 
-fun createBundleForDetailsScreen(idFilm:String, lastScreen:Screens, lastScreenData:String):Bundle{
-    return bundleOf(Pair(ID, idFilm), Pair(PREVSCREEN, lastScreen),Pair(PREVSCREENDATA, lastScreenData),)
+fun createBundleForDetailsScreen(
+    idFilm: String,
+    lastScreen: Screens,
+    lastScreenData: String
+): Bundle {
+    return bundleOf(
+        Pair(ID, idFilm),
+        Pair(PREVSCREEN, lastScreen),
+        Pair(PREVSCREENDATA, lastScreenData),
+    )
 }
 
 
 // шапка с назанием
 @Composable
-fun Header(title: String, year: String,  lastScreen:Screens, lastScreenData:String) {
+fun Header(title: String, year: String, lastScreen: Screens, lastScreenData: String) {
     val mainAct = LocalContext.current.getActivity() as MainActivity
     Row(
         modifier = Modifier
@@ -81,9 +89,11 @@ fun Header(title: String, year: String,  lastScreen:Screens, lastScreenData:Stri
     {
         Image(
             bitmap = ImageBitmap.imageResource(R.drawable.arrow_back), contentDescription = "back",
-            modifier = Modifier.size(40.dp, 25.dp).clickable {
-                mainAct.drawScreen(lastScreen, getBundle(lastScreen, lastScreenData))
-            }
+            modifier = Modifier
+                .size(40.dp, 25.dp)
+                .clickable {
+                    mainAct.drawScreen(lastScreen, getBundle(lastScreen, lastScreenData))
+                }
         )
         Text(
             text = "$title ($year)", style = MaterialTheme.typography.h1,
@@ -92,12 +102,12 @@ fun Header(title: String, year: String,  lastScreen:Screens, lastScreenData:Stri
     }
 }
 
-fun getBundle(lastScreen: Screens, lastScreenData:String):Bundle{
-    return when(lastScreen){
-        Screens.MainScreen->{
+fun getBundle(lastScreen: Screens, lastScreenData: String): Bundle {
+    return when (lastScreen) {
+        Screens.MainScreen -> {
             createBundleForMainScreen(lastScreenData)
         }
-        Screens.SelectionScreen->{
+        Screens.SelectionScreen -> {
             createBundleForSelectionScreen(lastScreenData)
         }
         else -> {
@@ -188,14 +198,27 @@ fun TitleWithActors(actors: List<Actor>) {
             items(actors.size) {
                 // карточка актера
                 val actor = actors[it]
-                Column(horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.width(100.dp).padding(end = 20.dp)) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .width(100.dp)
+                        .padding(end = 20.dp)
+                ) {
                     Image(
                         bitmap = ImageBitmap.imageResource(R.drawable.actor),
                         contentDescription = actor.name,
-                        modifier = Modifier.size(70.dp))
-                    Text(text = actor.name, style = MaterialTheme.typography.h4, textAlign = TextAlign.Center)
-                    Text(text = actor.asCharacter, style = MaterialTheme.typography.h5, textAlign = TextAlign.Center)
+                        modifier = Modifier.size(70.dp)
+                    )
+                    Text(
+                        text = actor.name,
+                        style = MaterialTheme.typography.h4,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        text = actor.asCharacter,
+                        style = MaterialTheme.typography.h5,
+                        textAlign = TextAlign.Center
+                    )
                 }
             }
         }
@@ -203,8 +226,9 @@ fun TitleWithActors(actors: List<Actor>) {
 }
 
 @Composable
-fun Subtitle(title: String){
-    Text(text = title, style = MaterialTheme.typography.subtitle1,
+fun Subtitle(title: String) {
+    Text(
+        text = title, style = MaterialTheme.typography.subtitle1,
         modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)
     )
 }

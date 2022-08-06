@@ -23,13 +23,13 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
-import com.example.filmo.MainActivity
 import com.example.filmo.R
-import com.example.filmo.exampleData
-import com.example.filmo.getActivity
 import com.example.filmo.model.SEARCH
 import com.example.filmo.model.Screens
-import com.example.filmo.model.remote.dataClass.*
+import com.example.filmo.model.dataClass.*
+import com.example.filmo.ui.MainActivity
+import com.example.filmo.ui.exampleData
+import com.example.filmo.ui.getActivity
 
 // Здесь функции для первого экрана с подборками фильмов
 

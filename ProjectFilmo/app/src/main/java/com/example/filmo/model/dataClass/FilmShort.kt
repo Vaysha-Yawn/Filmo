@@ -1,4 +1,4 @@
-package com.example.filmo.model.remote.dataClass
+package com.example.filmo.model.dataClass
 
 data class FilmShort(
     val id:String,
