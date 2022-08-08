@@ -4,9 +4,10 @@ import com.example.filmo.model.remote.dataClass.Top250Data
 import retrofit2.Response
 import retrofit2.http.GET
 
+const val myKey = "k_smi0n084"
 interface Top250Api {
 
-    @GET("/Top250Movies")
+    @GET("Top250Movies/$myKey")
     suspend fun getTop250(): Response<Top250Data>
 
 }

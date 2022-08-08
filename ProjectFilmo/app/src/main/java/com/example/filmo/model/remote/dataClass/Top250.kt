@@ -1,18 +1,18 @@
 package com.example.filmo.model.remote.dataClass
 
 data class Top250Data(
-    var Items : List<Top250DataDetail>,
-    var ErrorMessage : String
+    var items : List<Top250DataDetail>,
+    var errorMessage : String
 )
 
 data class Top250DataDetail(
-    var Id : String,
-    var Rank : String,
-    var Title : String,
-    var FullTitle : String,
-    var Year : String,
-    var Image : String,
-    var Crew : String,
-    var IMDbRating : String,
-    var IMDbRatingCount : String,
+    var id : String,
+    var rank : String,
+    var title : String,
+    var fullTitle : String,
+    var year : String,
+    var image : String,
+    var crew : String,
+    var imDbRating : String,
+    var imDbRatingCount : String,
 )

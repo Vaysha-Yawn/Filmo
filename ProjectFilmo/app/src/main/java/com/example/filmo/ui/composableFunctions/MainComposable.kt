@@ -1,6 +1,7 @@
 package com.example.filmo.ui.composableFunctions
 
 import android.os.Bundle
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,13 +18,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
+import com.bumptech.glide.Glide
+import com.example.filmo.MainVM
 import com.example.filmo.R
+import com.example.filmo.loadPicture
 import com.example.filmo.model.SEARCH
 import com.example.filmo.model.Screens
 import com.example.filmo.model.dataClass.*
@@ -36,17 +41,32 @@ import com.example.filmo.ui.getActivity
 // главный экран
 @Composable
 fun MainScreen(
-    map: MutableMap<String, MutableList<FilmShort>>,
     bundle: Bundle
 ) {
     val textState = remember {
         mutableStateOf(bundle.getString(SEARCH) ?: "")
     }
 
+    val mainAct = LocalContext.current.getActivity() as MainActivity
+    mainAct.loadTop250()
+
+    val list = mainAct.viewModel.liveTop250
+
     Column {
         Search(textState)
         if (textState.value == "") {
-            SomeCompilation(map)
+            SomeCompilation(
+                mutableMapOf<String, List<FilmShort>>(
+                    "Top 250 1" to list.value,
+                    "Top 250 2" to list.value,
+                    "Top 250 3" to list.value,
+                    "Top 250 4" to list.value,
+                    "Top 250 5" to list.value,
+                    "Top 250 6" to list.value,
+                    "Top 250 7" to list.value,
+                    "Top 250 8" to list.value,
+                )
+            )
         } else {
             AnswerForSearch(
                 textState.value,
@@ -63,7 +83,7 @@ fun createBundleForMainScreen(search: String?): Bundle {
 // Несколько подборок
 @Composable
 fun SomeCompilation(
-    map: MutableMap<String, MutableList<FilmShort>>,
+    map: MutableMap<String, List<FilmShort>>,
 ) {
     LazyColumn(Modifier.padding(start = 20.dp, bottom = 20.dp, end = 20.dp)) {
         items(map.size) {
@@ -88,19 +108,22 @@ fun CardFilmSmall(film: FilmShort, inScreens: Screens, screenData: String) {
             .size(100.dp, 145.dp)
             .clip(RoundedCornerShape(0.dp))
     ) {
-        Image(
-            BitmapPainter(ImageBitmap.imageResource(R.drawable.image)),
-            contentDescription = film.title,
-            Modifier
-                .fillMaxSize()
-                .clickable {
-                    mainAct.drawScreen(
-                        Screens.DetailsScreen,
-                        createBundleForDetailsScreen(film.id, inScreens, screenData)
-                    )
-                },
-            colorFilter = ColorFilter.lighting(Color.Gray, Color.Black),
-        )
+        loadPicture(film.poster, R.drawable.image, LocalContext.current).value?.let {
+            Image(
+                BitmapPainter(it.asImageBitmap()),
+                contentDescription = film.title,
+                Modifier
+                    .fillMaxSize()
+                    .clickable {
+                        mainAct.drawScreen(
+                            Screens.DetailsScreen,
+                            createBundleForDetailsScreen(film.id, inScreens, screenData)
+                        )
+                    },
+                colorFilter = ColorFilter.lighting(Color.Gray, Color.Black),
+            )
+        }
+
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxHeight()
@@ -135,7 +158,7 @@ fun CardFilmSmall(film: FilmShort, inScreens: Screens, screenData: String) {
 @Composable
 fun Compilation(
     title: String,
-    listFilms: MutableList<FilmShort>,
+    listFilms: List<FilmShort>,
     topSpace: Dp = 40.dp
 ) {
     val mainAct = LocalContext.current.getActivity() as MainActivity
