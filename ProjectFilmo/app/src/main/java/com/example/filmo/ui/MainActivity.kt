@@ -54,6 +54,19 @@ class MainActivity : ComponentActivity() {
         viewModel.loadTop250()
     }
 
+    fun loadMostPopularMovies(){
+        viewModel.loadMostPopularMovies()
+    }
+
+    fun loadInTheaters(){
+        viewModel.loadInTheaters()
+    }
+
+    fun loadComingSoon(){
+        viewModel.loadComingSoon()
+    }
+
+
 }
 
 @Composable

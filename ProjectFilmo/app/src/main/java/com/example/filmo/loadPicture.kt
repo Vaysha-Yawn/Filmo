@@ -13,7 +13,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 
 @Composable
-fun loadPicture(url: String, @DrawableRes defaultImage: Int, context:Context): MutableState<Bitmap?> {
+fun loadPicture(url: String?, @DrawableRes defaultImage: Int, context:Context): MutableState<Bitmap?> {
 
     val bitmapState: MutableState<Bitmap?> = remember {
         mutableStateOf(null)

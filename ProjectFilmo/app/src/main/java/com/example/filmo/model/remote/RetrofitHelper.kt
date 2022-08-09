@@ -5,10 +5,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitHelper {
 
-    val baseUrl = "https://imdb-api.com/en/API/"
+    val baseUrlStart = "https://imdb-api.com/"
 
-    fun getInstance(): Retrofit {
-        return Retrofit.Builder().baseUrl(baseUrl)
+    val baseUrlEnd = "/API/"
+
+    fun getInstance(lang:String = "en"): Retrofit {
+        return Retrofit.Builder().baseUrl(baseUrlStart+lang+baseUrlEnd)
             .addConverterFactory(GsonConverterFactory.create())
             // we need to add converter factory to
             // convert JSON object to Java object

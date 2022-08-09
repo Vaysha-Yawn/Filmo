@@ -1,13 +1,14 @@
 package com.example.filmo.model.remote.dataClass
 
-data class Top250Data(
-    var items : List<Top250DataDetail>,
+data class MostPopularData(
+    var items : List<MostPopularDataDetail>,
     var errorMessage : String
 )
 
-data class Top250DataDetail(
+data class MostPopularDataDetail(
     var id : String,
     var rank : String?,
+    var rankUpDown : String?,
     var title : String?,
     var fullTitle : String?,
     var year : String?,

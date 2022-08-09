@@ -6,4 +6,9 @@
     <string name="description">Описание</string>
     <string name="generes">Жанры</string>
     <string name="actors">Актеры</string>
+    // название подборок
+    <string name="Top250Movies">Top 250 movies</string>
+    <string name="MostPopularMovies">Most popular movies</string>
+    <string name="InTheaters">In theaters</string>
+    <string name="ComingSoon">Coming soon</string>
 </resources>

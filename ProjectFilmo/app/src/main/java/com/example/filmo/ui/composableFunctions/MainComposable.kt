@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
@@ -47,24 +48,34 @@ fun MainScreen(
         mutableStateOf(bundle.getString(SEARCH) ?: "")
     }
 
-    val mainAct = LocalContext.current.getActivity() as MainActivity
-    mainAct.loadTop250()
-
-    val list = mainAct.viewModel.liveTop250
-
     Column {
         Search(textState)
         if (textState.value == "") {
+
+            val mainAct = LocalContext.current.getActivity() as MainActivity
+
+            mainAct.loadTop250()
+            val top250list = mainAct.viewModel.liveTop250
+            val top250Title = stringResource(id = R.string.Top250Movies)
+
+            mainAct.loadComingSoon()
+            val ComingSoonlist = mainAct.viewModel.liveComingSoon
+            val ComingSoonTitle = stringResource(id = R.string.ComingSoon)
+
+            mainAct.loadInTheaters()
+            val InTheaterslist = mainAct.viewModel.liveInTheaters
+            val InTheatersTitle = stringResource(id = R.string.InTheaters)
+
+            mainAct.loadMostPopularMovies()
+            val MostPopularMovieslist = mainAct.viewModel.liveMostPopularMovies
+            val MostPopularMoviesTitle = stringResource(id = R.string.MostPopularMovies)
+
             SomeCompilation(
                 mutableMapOf<String, List<FilmShort>>(
-                    "Top 250 1" to list.value,
-                    "Top 250 2" to list.value,
-                    "Top 250 3" to list.value,
-                    "Top 250 4" to list.value,
-                    "Top 250 5" to list.value,
-                    "Top 250 6" to list.value,
-                    "Top 250 7" to list.value,
-                    "Top 250 8" to list.value,
+                    top250Title to top250list.value,
+                    MostPopularMoviesTitle to MostPopularMovieslist.value,
+                    InTheatersTitle to InTheaterslist.value,
+                    ComingSoonTitle to ComingSoonlist.value,
                 )
             )
         } else {
@@ -129,7 +140,7 @@ fun CardFilmSmall(film: FilmShort, inScreens: Screens, screenData: String) {
             modifier = Modifier.fillMaxHeight()
         ) {
             Text(
-                text = film.title,
+                text = film.title?:"",
                 style = MaterialTheme.typography.h3,
                 modifier = Modifier.padding(10.dp)
             )
@@ -138,12 +149,12 @@ fun CardFilmSmall(film: FilmShort, inScreens: Screens, screenData: String) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = film.year,
+                    text = film.year?:"",
                     style = MaterialTheme.typography.h2,
                     modifier = Modifier.padding(10.dp)
                 )
                 Text(
-                    text = film.rating,
+                    text = film.rating?:"",
                     style = MaterialTheme.typography.h2,
                     modifier = Modifier.padding(10.dp)
                 )
