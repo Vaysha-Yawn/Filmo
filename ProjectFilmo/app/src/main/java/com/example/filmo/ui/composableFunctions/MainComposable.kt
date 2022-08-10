@@ -1,7 +1,6 @@
 package com.example.filmo.ui.composableFunctions
 
 import android.os.Bundle
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -26,8 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
-import com.bumptech.glide.Glide
-import com.example.filmo.MainVM
 import com.example.filmo.R
 import com.example.filmo.loadPicture
 import com.example.filmo.model.SEARCH
@@ -54,20 +51,20 @@ fun MainScreen(
 
             val mainAct = LocalContext.current.getActivity() as MainActivity
 
-            mainAct.loadTop250()
-            val top250list = mainAct.viewModel.liveTop250
+            mainAct.mainVM.loadTop250()
+            val top250list = mainAct.mainVM.liveTop250
             val top250Title = stringResource(id = R.string.Top250Movies)
 
-            mainAct.loadComingSoon()
-            val ComingSoonlist = mainAct.viewModel.liveComingSoon
+            mainAct.mainVM.loadComingSoon()
+            val ComingSoonlist = mainAct.mainVM.liveComingSoon
             val ComingSoonTitle = stringResource(id = R.string.ComingSoon)
 
-            mainAct.loadInTheaters()
-            val InTheaterslist = mainAct.viewModel.liveInTheaters
+            mainAct.mainVM.loadInTheaters()
+            val InTheaterslist = mainAct.mainVM.liveInTheaters
             val InTheatersTitle = stringResource(id = R.string.InTheaters)
 
-            mainAct.loadMostPopularMovies()
-            val MostPopularMovieslist = mainAct.viewModel.liveMostPopularMovies
+            mainAct.mainVM.loadMostPopularMovies()
+            val MostPopularMovieslist = mainAct.mainVM.liveMostPopularMovies
             val MostPopularMoviesTitle = stringResource(id = R.string.MostPopularMovies)
 
             SomeCompilation(

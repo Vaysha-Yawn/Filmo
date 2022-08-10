@@ -13,11 +13,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
-import com.bumptech.glide.Glide
 import com.example.filmo.MainVM
+import com.example.filmo.SelectionVM
 import com.example.filmo.model.Screens
-import com.example.filmo.model.dataClass.FilmShort
-import com.example.filmo.model.remote.dataClass.Top250DataDetail
 import com.example.filmo.model.testData.TestData
 import com.example.filmo.ui.composableFunctions.*
 import com.example.filmo.ui.theme.FilmoTheme
@@ -28,7 +26,9 @@ val exampleData = TestData()
 
 class MainActivity : ComponentActivity() {
 
-    val viewModel:MainVM by viewModels()
+    val mainVM:MainVM by viewModels()
+    val selectionVM:SelectionVM by viewModels()
+
     lateinit var nav: MutableState<Screens>
     var arguments = bundleOf()
 
@@ -50,22 +50,6 @@ class MainActivity : ComponentActivity() {
         nav.value = nameScreen
     }
 
-    fun loadTop250(){
-        viewModel.loadTop250()
-    }
-
-    fun loadMostPopularMovies(){
-        viewModel.loadMostPopularMovies()
-    }
-
-    fun loadInTheaters(){
-        viewModel.loadInTheaters()
-    }
-
-    fun loadComingSoon(){
-        viewModel.loadComingSoon()
-    }
-
 
 }
 
@@ -76,7 +60,7 @@ fun DrawScreen(nameScreen: Screens, arguments: Bundle) {
             MainScreen( arguments)
         }
         Screens.SelectionScreen -> {
-            SelectionScreen(exampleData.list, arguments)
+            SelectionScreen(arguments)
         }
         Screens.DetailsScreen -> {
             Details(exampleData.filmMore, arguments)

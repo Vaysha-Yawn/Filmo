@@ -32,22 +32,39 @@ import com.example.filmo.model.Screens
 import com.example.filmo.model.TITLE
 import com.example.filmo.model.dataClass.FilmShort
 import com.example.filmo.ui.MainActivity
+import com.example.filmo.ui.exampleData
 import com.example.filmo.ui.getActivity
 
 // Второй экран - подборка фильмов
 @Composable
-fun SelectionScreen(listFilms: MutableList<FilmShort>, bundle: Bundle) {
+fun SelectionScreen( bundle: Bundle) {
+
+    val mainAct = LocalContext.current.getActivity() as MainActivity
 
     val title = bundle.getString(TITLE)?:""
 
-    val mainAct = LocalContext.current.getActivity() as MainActivity
+    when (title){
+        stringResource(id = R.string.Top250Movies)->{
+            mainAct.selectionVM.loadTop250()
+        }
+        stringResource(id = R.string.MostPopularMovies)->{
+            mainAct.selectionVM.loadMostPopularMovies()
+        }
+        stringResource(id = R.string.InTheaters)->{
+            mainAct.selectionVM.loadInTheaters()
+        }
+        stringResource(id = R.string.ComingSoon)->{
+            mainAct.selectionVM.loadComingSoon()
+        }
+    }
 
     Column(Modifier.padding(20.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 20.dp)) {
             Image(
                 BitmapPainter(ImageBitmap.imageResource(R.drawable.arrow)),
                 contentDescription = "arrow",
-                modifier = Modifier.rotate(180f)
+                modifier = Modifier
+                    .rotate(180f)
                     .size(20.dp, 10.dp)
                     .clickable {
                         mainAct.drawScreen(Screens.MainScreen, createBundleForMainScreen(""))
@@ -56,7 +73,7 @@ fun SelectionScreen(listFilms: MutableList<FilmShort>, bundle: Bundle) {
             Text(text = title, style = MaterialTheme.typography.subtitle1 ,
                 modifier = Modifier.padding(start = 20.dp))
         }
-        GridFilms(listFilms, Screens.SelectionScreen, title)
+        GridFilms(mainAct.selectionVM.liveList.value.toMutableList(), Screens.SelectionScreen, title)
     }
 }
 
