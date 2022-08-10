@@ -17,22 +17,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.filmo.R
-import com.example.filmo.loadPicture
 import com.example.filmo.model.SEARCH
 import com.example.filmo.model.Screens
 import com.example.filmo.model.dataClass.*
 import com.example.filmo.ui.MainActivity
-import com.example.filmo.ui.exampleData
 import com.example.filmo.ui.getActivity
+
 
 // Здесь функции для первого экрана с подборками фильмов
 
@@ -115,21 +117,24 @@ fun CardFilmSmall(film: FilmShort, inScreens: Screens, screenData: String) {
             .size(100.dp, 145.dp)
             .clip(RoundedCornerShape(0.dp))
     ) {
-        loadPicture(film.poster, R.drawable.cardfilmshort, LocalContext.current).value?.let {
-            Image(
-                BitmapPainter(it.asImageBitmap()),
-                contentDescription = film.title,
-                Modifier
-                    .fillMaxSize()
-                    .clickable {
-                        mainAct.drawScreen(
-                            Screens.DetailsScreen,
-                            createBundleForDetailsScreen(film.id, inScreens, screenData)
-                        )
-                    },
-                colorFilter = ColorFilter.lighting(Color.Gray, Color.Black),
-            )
-        }
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(film.poster)
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.cardfilmshort),
+            contentDescription = film.title,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable {
+                    mainAct.drawScreen(
+                        Screens.DetailsScreen,
+                        createBundleForDetailsScreen(film.id, inScreens, screenData)
+                    )
+                },
+            colorFilter = ColorFilter.lighting(Color.Gray, Color.Black),
+        )
 
         Column(
             verticalArrangement = Arrangement.SpaceBetween,

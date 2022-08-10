@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -15,12 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -28,8 +29,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.filmo.R
-import com.example.filmo.loadPicture
 import com.example.filmo.model.ID
 import com.example.filmo.model.PREVSCREEN
 import com.example.filmo.model.PREVSCREENDATA
@@ -59,7 +61,7 @@ fun Details( bundle: Bundle) {
         Header(film.title?:"", film.year?:"", lastScreen, lastScreenData)
         LazyColumn {
             items(1) {
-                Poster(film.poster, film.rating?:"")
+                Poster(film.poster, film.rating?:"", film.title?:"")
                 TitleWithText(stringResource(id = R.string.date), film.releaseDate?:"")
                 TitleWithText(stringResource(id = R.string.description), film.description?:"")
                 TitleWithGenres(film.genres)
@@ -126,7 +128,7 @@ fun getBundle(lastScreen: Screens, lastScreenData: String): Bundle {
 
 // постер с рейтингом и ссылкой на трейлер
 @Composable
-fun Poster(image: String, rating: String) {
+fun Poster(image: String, rating: String, title: String) {
     Box(
         Modifier
             .fillMaxWidth()
@@ -136,15 +138,18 @@ fun Poster(image: String, rating: String) {
             .background(Color.LightGray)
             .padding(vertical = 60.dp), contentAlignment = Alignment.Center
     ) {
-        loadPicture(image, R.drawable.cardfilmshort, LocalContext.current).value?.let {
-            Image(
-                BitmapPainter(it.asImageBitmap()),
-                contentDescription = "poster",
-                modifier = Modifier
-                    .size(240.dp, 360.dp)
-                    .clip(RoundedCornerShape(20.dp)),
-            )
-        }
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(image)
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.cardfilmshort),
+            contentDescription = title,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(240.dp, 360.dp)
+                .clip(RoundedCornerShape(20.dp))
+        )
         Column(
             Modifier.size(240.dp, 360.dp),
             verticalArrangement = Arrangement.SpaceBetween,
@@ -214,13 +219,18 @@ fun TitleWithActors(actors: List<Actor>) {
                         .width(100.dp)
                         .padding(end = 20.dp)
                 ) {
-                    loadPicture(actor.image, R.drawable.cardfilmshort, LocalContext.current).value?.let {
-                        Image(
-                            BitmapPainter(it.asImageBitmap()),
-                            contentDescription = actor.name,
-                            modifier = Modifier.size(70.dp)
-                        )
-                    }
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(actor.image)
+                            .crossfade(true)
+                            .build(),
+                        placeholder = painterResource(R.drawable.cardfilmshort),
+                        contentDescription = actor.name,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(70.dp)
+                            .clip(CircleShape)
+                    )
                     Text(
                         text = actor.name,
                         style = MaterialTheme.typography.h4,
