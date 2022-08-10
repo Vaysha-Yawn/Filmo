@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
 import com.example.filmo.DetailVM
 import com.example.filmo.MainVM
+import com.example.filmo.SearchVM
 import com.example.filmo.SelectionVM
 import com.example.filmo.model.Screens
 import com.example.filmo.model.testData.TestData
@@ -30,6 +31,7 @@ class MainActivity : ComponentActivity() {
     val mainVM:MainVM by viewModels()
     val selectionVM:SelectionVM by viewModels()
     val detailVM:DetailVM by viewModels()
+    val searchVM:SearchVM by viewModels()
 
     lateinit var nav: MutableState<Screens>
     var arguments = bundleOf()

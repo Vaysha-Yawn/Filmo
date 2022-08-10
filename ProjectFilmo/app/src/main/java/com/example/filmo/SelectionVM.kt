@@ -4,12 +4,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.filmo.model.dataClass.FilmShort
 import com.example.filmo.model.remote.RetrofitHelper
-import com.example.filmo.model.remote.Top250Api
+import com.example.filmo.model.remote.RetrofitMovieApi
 import com.example.filmo.ui.exampleData
 import kotlinx.coroutines.*
 
 class SelectionVM:ViewModel() {
-    val top250Api = RetrofitHelper.getInstance("en").create(Top250Api::class.java)
+    val top250Api = RetrofitHelper.getInstance("en").create(RetrofitMovieApi::class.java)
 
     private val viewModelJob = SupervisorJob()
 

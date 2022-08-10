@@ -78,7 +78,6 @@ fun MainScreen(
         } else {
             AnswerForSearch(
                 textState.value,
-                exampleData.list,
             )
         }
     }
@@ -116,7 +115,7 @@ fun CardFilmSmall(film: FilmShort, inScreens: Screens, screenData: String) {
             .size(100.dp, 145.dp)
             .clip(RoundedCornerShape(0.dp))
     ) {
-        loadPicture(film.poster, R.drawable.image, LocalContext.current).value?.let {
+        loadPicture(film.poster, R.drawable.cardfilmshort, LocalContext.current).value?.let {
             Image(
                 BitmapPainter(it.asImageBitmap()),
                 contentDescription = film.title,

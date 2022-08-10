@@ -136,7 +136,7 @@ fun Poster(image: String, rating: String) {
             .background(Color.LightGray)
             .padding(vertical = 60.dp), contentAlignment = Alignment.Center
     ) {
-        loadPicture(image, R.drawable.image, LocalContext.current).value?.let {
+        loadPicture(image, R.drawable.cardfilmshort, LocalContext.current).value?.let {
             Image(
                 BitmapPainter(it.asImageBitmap()),
                 contentDescription = "poster",
@@ -214,7 +214,7 @@ fun TitleWithActors(actors: List<Actor>) {
                         .width(100.dp)
                         .padding(end = 20.dp)
                 ) {
-                    loadPicture(actor.image, R.drawable.image, LocalContext.current).value?.let {
+                    loadPicture(actor.image, R.drawable.cardfilmshort, LocalContext.current).value?.let {
                         Image(
                             BitmapPainter(it.asImageBitmap()),
                             contentDescription = actor.name,

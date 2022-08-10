@@ -85,8 +85,12 @@ fun createBundleForSelectionScreen(title:String):Bundle{
 // Экран с названием поиска и его результами
 @Composable
 fun AnswerForSearch(
-    searchText: String, listFilms: MutableList<FilmShort>
+    searchText: String
 ) {
+    val mainAct = LocalContext.current.getActivity() as MainActivity
+    mainAct.searchVM.loadSearch(searchText)
+    val listFilms = mainAct.searchVM.liveFilm.value.toMutableList()
+
     Column(Modifier.padding(20.dp)) {
         Text(
             text = stringResource(id = R.string.answers) + " " + searchText, style = MaterialTheme.typography.subtitle1,
