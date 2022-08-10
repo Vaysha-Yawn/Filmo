@@ -20,7 +20,6 @@ class TestData {
         year = "1994",
         rating = "9.3",
         poster = "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_Ratio0.6837_AL_.jpg",
-        trailer = "https://www.imdb.com/video/imdb/vi3877612057/imdb/embed",
         genres = listOf("Drama"),
         releaseDate = "1994-10-14",
         description = "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",

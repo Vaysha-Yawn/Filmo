@@ -15,7 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
@@ -27,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import com.example.filmo.R
+import com.example.filmo.loadPicture
 import com.example.filmo.model.ID
 import com.example.filmo.model.PREVSCREEN
 import com.example.filmo.model.PREVSCREENDATA
@@ -43,18 +46,22 @@ import com.example.filmo.ui.getActivity
 // которые состоят из названия и деталей
 // детали бывают текстом, кнопка? жанры, лист актеров
 @Composable
-fun Details(film: FilmMore, bundle: Bundle) {
+fun Details( bundle: Bundle) {
     val idFilm = bundle.getString(ID) ?: ""
+    val mainAct = LocalContext.current.getActivity() as MainActivity
+    mainAct.detailVM.loadFilm(idFilm)
+    val film = mainAct.detailVM.liveFilm.value
+
     val lastScreen = bundle.getSerializable(PREVSCREEN) as Screens
     val lastScreenData = bundle.getString(PREVSCREENDATA) ?: ""
 
     Column {
-        Header(film.title, film.year, lastScreen, lastScreenData)
+        Header(film.title?:"", film.year?:"", lastScreen, lastScreenData)
         LazyColumn {
             items(1) {
-                Poster(R.drawable.image, film.rating)
-                TitleWithText(stringResource(id = R.string.date), film.releaseDate)
-                TitleWithText(stringResource(id = R.string.description), film.description)
+                Poster(film.poster, film.rating?:"")
+                TitleWithText(stringResource(id = R.string.date), film.releaseDate?:"")
+                TitleWithText(stringResource(id = R.string.description), film.description?:"")
                 TitleWithGenres(film.genres)
                 TitleWithActors(actors = film.actors)
             }
@@ -119,7 +126,7 @@ fun getBundle(lastScreen: Screens, lastScreenData: String): Bundle {
 
 // постер с рейтингом и ссылкой на трейлер
 @Composable
-fun Poster(posterId: Int, rating: String) {
+fun Poster(image: String, rating: String) {
     Box(
         Modifier
             .fillMaxWidth()
@@ -129,13 +136,15 @@ fun Poster(posterId: Int, rating: String) {
             .background(Color.LightGray)
             .padding(vertical = 60.dp), contentAlignment = Alignment.Center
     ) {
-        Image(
-            BitmapPainter(ImageBitmap.imageResource(posterId)),
-            contentDescription = "poster",
-            modifier = Modifier
-                .size(240.dp, 360.dp)
-                .clip(RoundedCornerShape(20.dp)),
-        )
+        loadPicture(image, R.drawable.image, LocalContext.current).value?.let {
+            Image(
+                BitmapPainter(it.asImageBitmap()),
+                contentDescription = "poster",
+                modifier = Modifier
+                    .size(240.dp, 360.dp)
+                    .clip(RoundedCornerShape(20.dp)),
+            )
+        }
         Column(
             Modifier.size(240.dp, 360.dp),
             verticalArrangement = Arrangement.SpaceBetween,
@@ -172,17 +181,18 @@ fun TitleWithText(title: String, text: String) {
 }
 
 @Composable
-fun TitleWithGenres(genres: List<String>) {
+fun TitleWithGenres(genres: List<String?>) {
     Column(modifier = Modifier.padding(horizontal = 30.dp)) {
         Subtitle(stringResource(id = R.string.generes))
-        LazyRow {
+        LazyRow() {
             items(genres.size) {
                 Button(
                     onClick = { },
                     shape = RoundedCornerShape(20.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray)
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
+                    modifier = Modifier.padding(end = 20.dp)
                 ) {
-                    Text(text = genres[it], style = MaterialTheme.typography.body1)
+                    Text(text = genres[it]?:"", style = MaterialTheme.typography.body1)
                 }
             }
         }
@@ -204,11 +214,13 @@ fun TitleWithActors(actors: List<Actor>) {
                         .width(100.dp)
                         .padding(end = 20.dp)
                 ) {
-                    Image(
-                        bitmap = ImageBitmap.imageResource(R.drawable.actor),
-                        contentDescription = actor.name,
-                        modifier = Modifier.size(70.dp)
-                    )
+                    loadPicture(actor.image, R.drawable.image, LocalContext.current).value?.let {
+                        Image(
+                            BitmapPainter(it.asImageBitmap()),
+                            contentDescription = actor.name,
+                            modifier = Modifier.size(70.dp)
+                        )
+                    }
                     Text(
                         text = actor.name,
                         style = MaterialTheme.typography.h4,

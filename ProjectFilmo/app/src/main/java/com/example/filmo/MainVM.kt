@@ -33,7 +33,7 @@ class MainVM:ViewModel() {
             if (result.isSuccessful){
                 val items = result.body()?.items
                 if (items!=null){
-                    for (item in items.subList(0, 10)){
+                    for (item in items.subList(0, 5)){
                         val film = FilmShort(item.id, item.image, item.title, item.imDbRating, item.year)
                         listResult.add(film)
                     }
@@ -51,7 +51,7 @@ class MainVM:ViewModel() {
             if (result.isSuccessful){
                 val items = result.body()?.items
                 if (items!=null){
-                    for (item in items.subList(0, 10)){
+                    for (item in items.subList(0, 5)){
                         val film = FilmShort(item.id, item.image, item.title, item.imDbRating, item.year)
                         listResult.add(film)
                     }
@@ -68,7 +68,7 @@ class MainVM:ViewModel() {
             if (result.isSuccessful){
                 val items = result.body()?.items
                 if (items!=null){
-                    for (item in items.subList(0, 10)){
+                    for (item in items.subList(0, 5)){
                         val film = FilmShort(item.id, item.image, item.title, item.imDbRating, item.year)
                         listResult.add(film)
                     }
@@ -85,7 +85,7 @@ class MainVM:ViewModel() {
             if (result.isSuccessful){
                 val items = result.body()?.items
                 if (items!=null){
-                    for (item in items.subList(0, 10)){
+                    for (item in items.subList(0, 5)){
                         val film = FilmShort(item.id, item.image, item.title, item.imDbRating, item.year)
                         listResult.add(film)
                     }
