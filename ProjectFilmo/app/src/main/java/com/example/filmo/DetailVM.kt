@@ -9,7 +9,8 @@ import com.example.filmo.ui.exampleData
 import kotlinx.coroutines.*
 
 class DetailVM : ViewModel() {
-    val top250Api = RetrofitHelper.getInstance("en").create(RetrofitMovieApi::class.java)
+
+    lateinit var top250Api: RetrofitMovieApi
 
     private val viewModelJob = SupervisorJob()
 
@@ -42,7 +43,7 @@ class DetailVM : ViewModel() {
                         poster = titleData.image,
                         genres = genres,
                         releaseDate = titleData.releaseDate,
-                        description = titleData.plot,
+                        description = titleData.plotLocal,
                         actors = titleData.actorList
                     )
                 }

@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Filmo</string>
     <string name="search">Search...</string>
-    <string name="answers">Результаты поиска по запросу </string>
-    <string name="date">Дата выхода</string>
-    <string name="description">Описание</string>
-    <string name="generes">Жанры</string>
-    <string name="actors">Актеры</string>
+    <string name="answers">Search results for </string>
+    <string name="date">Release date</string>
+    <string name="description">Description</string>
+    <string name="generes">Genres</string>
+    <string name="actors">Actors</string>
     // название подборок
     <string name="Top250Movies">Top 250 movies</string>
     <string name="MostPopularMovies">Most popular movies</string>

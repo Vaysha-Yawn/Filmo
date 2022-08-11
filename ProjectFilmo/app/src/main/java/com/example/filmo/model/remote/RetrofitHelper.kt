@@ -9,7 +9,7 @@ object RetrofitHelper {
 
     val baseUrlEnd = "/API/"
 
-    fun getInstance(lang:String = "en"): Retrofit {
+    fun getInstance(lang:String): Retrofit {
         return Retrofit.Builder().baseUrl(baseUrlStart+lang+baseUrlEnd)
             .addConverterFactory(GsonConverterFactory.create())
             // we need to add converter factory to

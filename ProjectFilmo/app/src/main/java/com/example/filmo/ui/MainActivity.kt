@@ -7,17 +7,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
 import com.example.filmo.DetailVM
 import com.example.filmo.MainVM
+import com.example.filmo.R
 import com.example.filmo.SearchVM
 import com.example.filmo.SelectionVM
 import com.example.filmo.model.Screens
+import com.example.filmo.model.remote.RetrofitHelper
+import com.example.filmo.model.remote.RetrofitMovieApi
 import com.example.filmo.model.testData.TestData
 import com.example.filmo.ui.composableFunctions.*
 import com.example.filmo.ui.theme.FilmoTheme
@@ -34,10 +37,18 @@ class MainActivity : ComponentActivity() {
     val searchVM:SearchVM by viewModels()
 
     lateinit var nav: MutableState<Screens>
+
     var arguments = bundleOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val locale = this.resources.configuration.locales[0].language
+        val retrofit = initRetrofit(locale)
+        mainVM.top250Api = retrofit
+        selectionVM.top250Api = retrofit
+        detailVM.top250Api = retrofit
+        searchVM.top250Api = retrofit
 
         setContent {
             FilmoTheme {
@@ -54,6 +65,10 @@ class MainActivity : ComponentActivity() {
         nav.value = nameScreen
     }
 
+    fun initRetrofit(locale:String):
+            RetrofitMovieApi{
+        return RetrofitHelper.getInstance(locale).create(RetrofitMovieApi::class.java)
+    }
 
 }
 
