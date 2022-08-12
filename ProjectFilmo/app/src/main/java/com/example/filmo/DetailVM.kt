@@ -35,6 +35,10 @@ class DetailVM : ViewModel() {
                             genres.add(gen.value)
                         }
                     }
+                    var plot = titleData.plotLocal
+                    if(plot == ""){
+                        plot = titleData.plot
+                    }
                     liveFilm.value = FilmMore(
                         id = titleData.id,
                         title = titleData.title,
@@ -43,7 +47,7 @@ class DetailVM : ViewModel() {
                         poster = titleData.image,
                         genres = genres,
                         releaseDate = titleData.releaseDate,
-                        description = titleData.plotLocal,
+                        description = plot,
                         actors = titleData.actorList
                     )
                 }
