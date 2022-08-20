@@ -32,55 +32,41 @@ import androidx.core.os.bundleOf
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.filmo.R
-import com.example.filmo.model.ID
-import com.example.filmo.model.PREVSCREEN
-import com.example.filmo.model.PREVSCREENDATA
-import com.example.filmo.model.Screens
 import com.example.filmo.model.dataClass.*
+import com.example.filmo.retrofit.RetrofitApp
+import com.example.filmo.navigation.*
+import com.example.filmo.tools.getActivity
 import com.example.filmo.ui.MainActivity
-import com.example.filmo.ui.getActivity
 
 
 // Экран детализации фильма
 // Он состоит из верхнего названия
 // лента из постера
 // и деталей фильма
-// которые состоят из названия и деталей
-// детали бывают текстом, кнопка? жанры, лист актеров
 @Composable
-fun Details( bundle: Bundle) {
+fun Details(bundle: Bundle) {
     val idFilm = bundle.getString(ID) ?: ""
     val mainAct = LocalContext.current.getActivity() as MainActivity
-    mainAct.detailVM.loadFilm(idFilm)
+
+    mainAct.detailVM.loadFilm((mainAct.application as RetrofitApp).movieApi, idFilm, mainAct.key.value)
+
     val film = mainAct.detailVM.liveFilm.value
 
     val lastScreen = bundle.getSerializable(PREVSCREEN) as Screens
     val lastScreenData = bundle.getString(PREVSCREENDATA) ?: ""
 
     Column {
-        Header(film.title?:"", film.year?:"", lastScreen, lastScreenData)
+        Header(film.title ?: "", film.year ?: "", lastScreen, lastScreenData)
         LazyColumn {
             items(1) {
-                Poster(film.poster, film.rating?:"", film.title?:"")
-                TitleWithText(stringResource(id = R.string.date), film.releaseDate?:"")
-                TitleWithText(stringResource(id = R.string.description), film.description?:"")
+                Poster(film.poster, film.rating ?: "", film.title ?: "")
+                TitleWithText(stringResource(id = R.string.date), film.releaseDate ?: "")
+                TitleWithText(stringResource(id = R.string.description), film.description ?: "")
                 TitleWithGenres(film.genres)
                 TitleWithActors(actors = film.actors)
             }
         }
     }
-}
-
-fun createBundleForDetailsScreen(
-    idFilm: String,
-    lastScreen: Screens,
-    lastScreenData: String
-): Bundle {
-    return bundleOf(
-        Pair(ID, idFilm),
-        Pair(PREVSCREEN, lastScreen),
-        Pair(PREVSCREENDATA, lastScreenData),
-    )
 }
 
 
@@ -101,7 +87,7 @@ fun Header(title: String, year: String, lastScreen: Screens, lastScreenData: Str
             modifier = Modifier
                 .size(40.dp, 25.dp)
                 .clickable {
-                    mainAct.drawScreen(lastScreen, getBundle(lastScreen, lastScreenData))
+                    mainAct.navigate(lastScreen, getBundle(lastScreen, lastScreenData))
                 }
         )
         Text(
@@ -114,10 +100,10 @@ fun Header(title: String, year: String, lastScreen: Screens, lastScreenData: Str
 fun getBundle(lastScreen: Screens, lastScreenData: String): Bundle {
     return when (lastScreen) {
         Screens.MainScreen -> {
-            createBundleForMainScreen(lastScreenData)
+            getBundleForMainScreen(lastScreenData)
         }
         Screens.SelectionScreen -> {
-            createBundleForSelectionScreen(lastScreenData)
+            getBundleForSelectionScreen(lastScreenData)
         }
         else -> {
             bundleOf()
@@ -197,7 +183,7 @@ fun TitleWithGenres(genres: List<String?>) {
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
                     modifier = Modifier.padding(end = 20.dp)
                 ) {
-                    Text(text = genres[it]?:"", style = MaterialTheme.typography.body1)
+                    Text(text = genres[it] ?: "", style = MaterialTheme.typography.body1)
                 }
             }
         }

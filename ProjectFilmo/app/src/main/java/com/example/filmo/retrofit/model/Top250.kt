@@ -1,4 +1,4 @@
-package com.example.filmo.model.remote.dataClass
+package com.example.filmo.retrofit.model
 
 data class Top250Data(
     var items : List<Top250DataDetail>,

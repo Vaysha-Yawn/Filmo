@@ -1,4 +1,4 @@
-package com.example.filmo.model
+package com.example.filmo.navigation
 
 import java.io.Serializable
 

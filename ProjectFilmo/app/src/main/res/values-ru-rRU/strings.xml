@@ -11,4 +11,6 @@
     <string name="MostPopularMovies">Самые популярные фильмы</string>
     <string name="InTheaters">В кинотеатрах</string>
     <string name="ComingSoon">Скоро выйдут</string>
+
+    <string name="SeeYouTomorrow">Все попытки на сегодня исчерпаны, приходите завтра</string>
 </resources>

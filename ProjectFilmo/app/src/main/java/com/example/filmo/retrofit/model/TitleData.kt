@@ -1,4 +1,4 @@
-package com.example.filmo.model.remote.dataClass
+package com.example.filmo.retrofit.model
 
 import com.example.filmo.model.dataClass.Actor
 

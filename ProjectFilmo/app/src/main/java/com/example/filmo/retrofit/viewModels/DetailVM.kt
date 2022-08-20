@@ -1,16 +1,16 @@
-package com.example.filmo
+package com.example.filmo.retrofit.viewModels
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.filmo.model.dataClass.FilmMore
-import com.example.filmo.model.remote.RetrofitHelper
-import com.example.filmo.model.remote.RetrofitMovieApi
+import com.example.filmo.retrofit.RetrofitMovieApi
 import com.example.filmo.ui.exampleData
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class DetailVM : ViewModel() {
-
-    lateinit var top250Api: RetrofitMovieApi
 
     private val viewModelJob = SupervisorJob()
 
@@ -23,20 +23,20 @@ class DetailVM : ViewModel() {
 
     val liveFilm = mutableStateOf(exampleData.filmMore)
 
-    fun loadFilm(id: String) {
+    fun loadFilm(movieApi: RetrofitMovieApi, id: String, key: String) {
         uiScope.launch {
-            val result = top250Api.getFilmDetail(id)
+            val result = movieApi.getFilmDetail(id, key)
             if (result.isSuccessful) {
                 val titleData = result.body()
                 if (titleData != null) {
                     val genres = mutableListOf<String?>()
-                    if (titleData.genreList!=null){
+                    if (titleData.genreList != null) {
                         for (gen in titleData.genreList!!) {
                             genres.add(gen.value)
                         }
                     }
                     var plot = titleData.plotLocal
-                    if(plot == ""){
+                    if (plot == "") {
                         plot = titleData.plot
                     }
                     liveFilm.value = FilmMore(

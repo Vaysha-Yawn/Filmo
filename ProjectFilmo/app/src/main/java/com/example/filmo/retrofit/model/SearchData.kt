@@ -1,4 +1,4 @@
-package com.example.filmo.model.remote.dataClass
+package com.example.filmo.retrofit.model
 
 data class SearchData(
     var searchType : String,

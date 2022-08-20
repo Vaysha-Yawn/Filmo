@@ -11,4 +11,6 @@
     <string name="MostPopularMovies">Most popular movies</string>
     <string name="InTheaters">In theaters</string>
     <string name="ComingSoon">Coming soon</string>
+
+    <string name="SeeYouTomorrow">All attempts for today have been exhausted, come back tomorrow</string>
 </resources>

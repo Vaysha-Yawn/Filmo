@@ -1,16 +1,16 @@
-package com.example.filmo
+package com.example.filmo.retrofit.viewModels
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.filmo.model.dataClass.FilmMore
 import com.example.filmo.model.dataClass.FilmShort
-import com.example.filmo.model.remote.RetrofitHelper
-import com.example.filmo.model.remote.RetrofitMovieApi
+import com.example.filmo.retrofit.RetrofitMovieApi
 import com.example.filmo.ui.exampleData
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class SearchVM : ViewModel() {
-    lateinit var top250Api: RetrofitMovieApi
 
     private val viewModelJob = SupervisorJob()
 
@@ -23,9 +23,9 @@ class SearchVM : ViewModel() {
 
     val liveFilm = mutableStateOf(exampleData.list.toList())
 
-    fun loadSearch(search: String) {
+    fun loadSearch(movieApi: RetrofitMovieApi, search: String, key: String) {
         uiScope.launch {
-            val result = top250Api.getSearchData(search)
+            val result = movieApi.getSearchData(search, key)
             if (result.isSuccessful) {
                 val searchData = result.body()
                 if (searchData != null) {
