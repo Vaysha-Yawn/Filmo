@@ -47,11 +47,11 @@ fun MainScreen(
 
             val mainAct = LocalContext.current.getActivity() as MainActivity
 
-            //val bool = mainAct.mainVM.loadAll((mainAct.application as RetrofitApp).movieApi, mainAct.key.value)
-            val bool = mainAct.mainVM.loadTop250((mainAct.application as RetrofitApp).movieApi, mainAct.key.value)
-            if (bool==false){
+            val bool = mainAct.mainVM.loadAll((mainAct.application as RetrofitApp).movieApi, mainAct.key.value)
+            //val bool = mainAct.mainVM.loadTop250((mainAct.application as RetrofitApp).movieApi, mainAct.key.value)
+            /*if (bool==false){
                 mainAct.nextKey()
-            }
+            }*/
 
             val listTop250 = mainAct.mainVM.liveTop250.value
             val titleTop250 = stringResource(id = R.string.Top250Movies)

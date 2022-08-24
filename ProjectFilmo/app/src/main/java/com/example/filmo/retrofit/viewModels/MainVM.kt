@@ -7,6 +7,7 @@ import com.example.filmo.model.dataClass.FilmShort
 import com.example.filmo.retrofit.RetrofitMovieApi
 import com.example.filmo.ui.exampleData
 import kotlinx.coroutines.*
+import okhttp3.internal.wait
 
 class MainVM : ViewModel() {
 
@@ -42,7 +43,7 @@ class MainVM : ViewModel() {
         Log.e("ddddddd","loadTop250")
         val listResult = mutableListOf<FilmShort>()
         val load = uiScope.async {
-            val forReturn = withContext(Dispatchers.Default) {
+            val forReturn = withContext(Dispatchers.IO) {
                 val result = movieApi.getTop250(key)
                 if (result.isSuccessful) {
                     val items = result.body()?.items
@@ -68,6 +69,7 @@ class MainVM : ViewModel() {
                     Log.e("ddddddd","fail")
                     return@withContext false
                 }
+
             }
             liveTop250.value = listResult
             return@async forReturn
